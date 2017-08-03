@@ -14,21 +14,22 @@ DROP TABLE IF EXISTS vehicles;
 -- owner_id   should be a number, foreign key
 
 CREATE TABLE IF NOT EXISTS vehicles (
-  id --(add datatype and/or table contraint),
-  make --(add datatype and/or table contraint),
-  model --(add datatype and/or table contraint),
-  year --(add datatype and/or table contraint),
-  owner_id --(add datatype and/or table contraint)
+  id INTEGER PRIMARY KEY,
+  make TEXT,
+  model TEXT,
+  year INTEGER,
+  owner_id INTEGER
 );
 
 -- === INSERT STATEMENT ===============
 
 -- Complete the insert statement below. The values below need to be inserted into the 'vehicles' table.
 
-
-('Toyota', 'Camry', 1991, 1),
-('Honda', 'Civic', 1995, 1),
-('Ford', 'Focus', 2005, 1),
-('Ford', 'Taurus', 2003, 2),
-('VW', 'Bug', 2010, 2),
-('Mini', 'Cooper', 2013, 3);
+INSERT INTO vehicles
+VALUES
+(1,'Toyota', 'Camry', 1991, 1),
+(2,'Honda', 'Civic', 1995, 1),
+(3,'Ford', 'Focus', 2005, 1),
+(4,'Ford', 'Taurus', 2003, 2),
+(5,'VW', 'Bug', 2010, 2),
+(6,'Mini', 'Cooper', 2013, 3);
