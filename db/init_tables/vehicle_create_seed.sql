@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS vehicles;
 -- owner_id   should be a number, foreign key
 
 CREATE TABLE IF NOT EXISTS vehicles (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   make TEXT,
   model TEXT,
   year INTEGER,
@@ -25,11 +25,11 @@ CREATE TABLE IF NOT EXISTS vehicles (
 
 -- Complete the insert statement below. The values below need to be inserted into the 'vehicles' table.
 
-INSERT INTO vehicles
+INSERT INTO vehicles (make, model, year,owner_id)
 VALUES
-(1,'Toyota', 'Camry', 1991, 1),
-(2,'Honda', 'Civic', 1995, 1),
-(3,'Ford', 'Focus', 2005, 1),
-(4,'Ford', 'Taurus', 2003, 2),
-(5,'VW', 'Bug', 2010, 2),
-(6,'Mini', 'Cooper', 2013, 3);
+('Toyota', 'Camry', 1991, 1),
+('Honda', 'Civic', 1995, 1),
+('Ford', 'Focus', 2005, 1),
+('Ford', 'Taurus', 2003, 2),
+('VW', 'Bug', 2010, 2),
+('Mini', 'Cooper', 2013, 3);

@@ -4,7 +4,7 @@ module.exports = {
 
     db.read_all_users()
       .then( (users) => res.status(200).send( users ) )
-      .catch( () => res.status(500).send() );
+      .catch( (err) => res.status(500).send(err) );
   },
 
   getVehicles: function(req, res, next) {
@@ -12,21 +12,12 @@ module.exports = {
 
       db.read_all_vehicles()
         .then( (vehicles) => res.status(200).send( vehicles ) )
-        .catch( () => res.status(500).send() );
+        .catch( (err) => res.status(500).send(err) );
   },
 
   createUser: function(req, res, next) {
       const db = req.app.get('db');
       const { name, email } = req.body;
-
-      console.log(name, email);
-
-      // const dbInstance = req.app.get('db');
-      // const { name, description, price, imageurl } = req.body;
-
-      // dbInstance.create_product([name, description, price, imageurl])
-      // .then( () => res.status(200).send() )
-      // .catch( () => res.status(500).send() );
 
       db.create_user([name, email])
         .then( (response) => res.status(200).send(response) )
@@ -39,40 +30,50 @@ module.exports = {
       const {make, model, year, owner_id} = req.body;
 
       db.create_vehicle([make, model, year,owner_id])
-        .then( () => res.status(200).send() )
-        .catch( () => res.status(500).send() )
+        .then( (response) => {
+
+          res.status(200).send(response)} )
+        .catch( (err) => {
+
+          res.status(500).send(err)} )
 
   },
 
   getVehiclesCount: function(req, res, next) {
       const db = req.app.get('db');
-      const { params } = req
-
-      db.read_vehicles_count([params.userId])
+      const { userId } = req.params
+      console.log(userId);
+      db.read_vehicles_count([userId])
       .then( (vehiclesCount) => res.status(200).send( vehiclesCount ) )
-      .catch( () => res.status(500).send() );
+      .catch( (err) => {
+
+        res.status(500).send(err)} );
 
   },
 
   getBelongVehiclesById: function(req, res, next) {
       const db = req.app.get('db');
-      const { params } = req
+      const { userId } = req.params
 
-      db.read_vehicles_by_id([params.userId])
+      db.read_vehicle_by_id([userId])
       .then( ( vehicle ) => res.status(200).send( vehicle ) )
-      .catch( () => res.status(500).send() );
+      .catch( (err) => res.status(500).send(err) );
 
   },
 
   getBelongVehiclesByEmail: function(req, res, next) {
       const db = req.app.get('db');
-      const { query } = req
-
-      db.read_vehicles_by_email([query.userEmail])
-      .then( ( response ) => res.status(200).send( response ) )
-      .catch( () => res.status(500).send() );
-
-
+      const { userEmail, userFirstStart } = req.query
+      if(userEmail){
+        db.read_vehicle_by_email([userEmail])
+        .then( ( response ) => res.status(200).send( response ) )
+        .catch( (err) => res.status(500).send() );
+      }
+      else {
+        db.read_vehicile_by_first([`%${userFirstStart}%`])
+        .then( ( response ) => res.status(200).send( response ) )
+        .catch( (err) => res.status(500).send() );
+      }
 
   },
 
@@ -86,14 +87,29 @@ module.exports = {
 
   editOwner: function(req, res, next) {
       const db = req.app.get('db');
+      const {vehicleId, userId} = req.params;
+
+      db.edit_owner([vehicleId, userId])
+        .then( (vehicles) => res.status(200).send( vehicles ) )
+        .catch( (err) => res.status(500).send(err) );
   },
 
   removeOwner: function(req, res, next) {
       const db = req.app.get('db');
+      const {userId, vehicleId} = req.params
+
+      db.remove_owner([userId, vehicleId])
+        .then( (vehicles) => res.status(200).send( vehicles ) )
+        .catch( (err) => res.status(500).send(err) );
   },
 
   removeVehicle: function(req, res, next) {
       const db = req.app.get('db');
+      const {vehicleId} = req.params
+
+      db.remove_vehicle([vehicleId])
+        .then( (vehicles) => res.status(200).send( vehicles ) )
+        .catch( (err) => res.status(500).send(err) );
   }
 
 

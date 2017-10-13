@@ -1,2 +1,1 @@
-SELECT * FROM vehicles
-WHERE owner_id = $1;
+select * from vehicles where owner_id= $1;

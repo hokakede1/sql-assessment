@@ -1,1 +1,2 @@
-DELETE FROM vehicles WHERE id = $1;
+DELETE FROM vehicles WHERE id = $1
+RETURNING *;
